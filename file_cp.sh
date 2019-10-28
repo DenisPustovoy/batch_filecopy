@@ -1,22 +1,26 @@
-@echo off  
-Set second_folder=F:\Test1
-Set third_folder=F:\Test2
+@echo off
 
-for /f "tokens=*" %%A in ('dir /b /a:d %second_folder%') do (
+Set first_folder=F:\Test1
+Set second_folder=F:\Test2
+Set third_folder=F:\Test3
 
-	for /f "tokens=*" %%B in ('dir /b /a:d %second_folder%\%%A') do (
+for /f "tokens=*" %%A in ('dir /b /a:d %first_folder%') do (
+
+	for /f "tokens=*" %%B in ('dir /b /a:d %first_folder%\%%A') do (
 	
-		for /f "tokens=*" %%C in ('dir /b /a:d %second_folder%\%%A\%%B') do (
+		for /f "tokens=*" %%C in ('dir /b /a:d %first_folder%\%%A\%%B') do (
 		
-			for /f %%D IN ('dir %second_folder%\%%A\%%B\%%C /b') do (
+			setlocal EnableDelayedExpansion
 			
-				for /f "delims=\ tokens=3-5" %%f in ("%second_folder%\%%A\%%B\%%C\%%D") do (
+			for /f "delims= eol=" %%D in ('dir %first_folder%\%%A\%%B\%%C /b') do (
+			
+				for /f "delims=\ tokens=3-5" %%f in ("%first_folder%\%%A\%%B\%%C\%%D") do (
 				
-					IF EXIST %second_folder%\%%A\%%B\%%C\%%D (
+					IF EXIST %second_folder%\%%~nD.jpg (
 					
 						IF EXIST %third_folder%\%%f-%%g-%%h (
 						
-							move %second_folder%\%%A\%%B\%%C\%%D %third_folder%\%%f-%%g-%%h\%%D
+							move %second_folder%\%%~nD.jpg %third_folder%\%%f-%%g-%%h\%%~nD.jpg
 							
 						)
 						 
