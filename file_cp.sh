@@ -26,3 +26,7 @@ for /f "tokens=*" %%A in ('dir /b /a:d %second_folder%') do (
 		)  
 	) 
 )
+
+@echo on
+
+echo "image files have been translated successfully!"
