@@ -1,9 +1,28 @@
 @echo off  
-set "src=C:\source\In"
-set "dest=C:\dest\Out"
- for %%F in ("%src%\*.*") do (
-    for /f "tokens=1,2,3 delims=/ " %%A in ("%%~tF") do (
-        if not exist "%dest%\%%A" mkdir "%dest%\%%A"
-            forfiles -p "%src%" -d -2 -m *.* /C "cmd /c move "%%~fF" "%dest%\%%A"" 
-    )
- )
+Set second_folder=F:\Test1
+Set third_folder=F:\Test2
+
+for /f "tokens=*" %%A in ('dir /b /a:d %second_folder%') do (
+
+	for /f "tokens=*" %%B in ('dir /b /a:d %second_folder%\%%A') do (
+	
+		for /f "tokens=*" %%C in ('dir /b /a:d %second_folder%\%%A\%%B') do (
+		
+			for /f %%D IN ('dir %second_folder%\%%A\%%B\%%C /b') do (
+			
+				for /f "delims=\ tokens=3-5" %%f in ("%second_folder%\%%A\%%B\%%C\%%D") do (
+				
+					IF EXIST %second_folder%\%%A\%%B\%%C\%%D (
+					
+						IF EXIST %third_folder%\%%f-%%g-%%h (
+						
+							move %second_folder%\%%A\%%B\%%C\%%D %third_folder%\%%f-%%g-%%h\%%D
+							
+						)
+						 
+					) 				
+				)
+			)
+		)  
+	) 
+)
